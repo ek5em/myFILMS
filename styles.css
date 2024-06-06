@@ -1,0 +1,14 @@
+/* Добавьте стили по вашему усмотрению */
+.watched {
+    text-decoration: line-through;
+    color: gray;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+#seriesFields {
+    display: none;
+}

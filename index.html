@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить фильм, сериал, аниме</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">Фильмы и сериалы</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Новый фильм</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="list.html">Мои фильмы</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1 class="text-center">Добавить фильм, сериал, аниме</h1>
+        <form id="addForm">
+            <div class="form-group">
+                <label for="itemType">Тип</label>
+                <select class="form-control" id="itemType">
+                    <option value="movie">Фильм</option>
+                    <option value="series">Сериал</option>
+                    <option value="anime">Аниме</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="itemTitle">Название</label>
+                <input type="text" class="form-control" id="itemTitle" placeholder="Введите название" required>
+            </div>
+            <div class="form-group">
+                <label for="itemDescription">Описание</label>
+                <textarea class="form-control" id="itemDescription" rows="3" placeholder="Введите описание"></textarea>
+            </div>
+            <div class="form-group" id="movieFields">
+                <label for="movieDuration">Продолжительность (в минутах)</label>
+                <input type="number" class="form-control" id="movieDuration" placeholder="Введите продолжительность">
+            </div>
+            <div class="form-group" id="seriesFields">
+                <label for="episodeCount">Количество серий</label>
+                <input type="number" class="form-control" id="episodeCount" placeholder="Введите количество серий">
+                <label for="episodeDuration">Продолжительность одной серии (в минутах)</label>
+                <input type="number" class="form-control" id="episodeDuration" placeholder="Введите продолжительность одной серии">
+            </div>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
