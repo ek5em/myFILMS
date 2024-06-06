@@ -64,12 +64,16 @@ document.addEventListener("DOMContentLoaded", () => {
         itemList.innerHTML = "";
         // Отсортировать элементы: непросмотренные идут первыми, просмотренные последними
         const sortedItems = items.slice().sort((a, b) => a.watched - b.watched);
-
+    
         sortedItems.forEach((item, index) => {
             // Создаем новый элемент списка для каждого элемента в массиве
             const itemElement = document.createElement("li");
-            itemElement.classList.add("list-group-item");
-
+            itemElement.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
+    
+            if (item.watched) {
+                itemElement.classList.add("watched");
+            }
+    
             // Перевод типов
             let itemTypeTranslated = "";
             switch (item.type) {
@@ -83,39 +87,53 @@ document.addEventListener("DOMContentLoaded", () => {
                     itemTypeTranslated = "Аниме";
                     break;
             }
-
+    
             let itemDetails = `${item.title} (${itemTypeTranslated})`;
-
+    
             if (item.type === "movie") {
                 itemDetails += ` - Продолжительность: ${item.duration} мин.`;
             } else {
                 itemDetails += ` - Серий: ${item.episodeCount}, по ${item.episodeDuration} мин.`;
             }
-
+    
             itemDetails += `<br>Описание: ${item.description}`;
-
+    
             // Создаем чекбокс для изменения статуса просмотра
             const watchedCheckbox = document.createElement("input");
             watchedCheckbox.type = "checkbox";
             watchedCheckbox.checked = item.watched; // Устанавливаем состояние чекбокса в соответствии со статусом просмотра фильма
-
-            watchedCheckbox.addEventListener("change", () => {
+    
+            watchedCheckbox.addEventListener("change", (event) => {
                 // Изменение состояния просмотра элемента массива в соответствии с состоянием чекбокса
                 item.watched = watchedCheckbox.checked;
                 localStorage.setItem("items", JSON.stringify(items)); // Обновляем данные в локальном хранилище
                 renderList();
                 renderStatistics(); // Перерисовываем список
             });
-
+    
             // Добавляем остальные детали фильма
             itemElement.innerHTML = `<div>${itemDetails}</div>`;
-
+    
             // Добавляем чекбокс в конец элемента списка
             itemElement.appendChild(watchedCheckbox);
-
+    
+            // Добавляем обработчик события на сам элемент списка для изменения состояния чекбокса
+            itemElement.addEventListener("click", (event) => {
+                // Избегаем переключения чекбокса, если клик был непосредственно на чекбоксе
+                if (event.target !== watchedCheckbox) {
+                    watchedCheckbox.checked = !watchedCheckbox.checked;
+                    // Обновляем состояние просмотра элемента массива в соответствии с состоянием чекбокса
+                    item.watched = watchedCheckbox.checked;
+                    localStorage.setItem("items", JSON.stringify(items)); // Обновляем данные в локальном хранилище
+                    renderList();
+                    renderStatistics(); // Перерисовываем список
+                }
+            });
+    
             itemList.appendChild(itemElement);
         });
     }
+    
 
     function renderStatistics() {
         let watchedMovies = 0;
